@@ -2,3 +2,10 @@ body{
     background-color: #000;
     color: aliceblue;
 }
+.col-sm-3{
+    display: inline-block;
+}
+.col-sm-3 img{
+    height: 200;
+    width: 120;
+}

@@ -1,8 +1,23 @@
 from django.shortcuts import render
 from django.http import HttpResponse
+from . models import Product
+from math import ceil
 
 def shop(req):
-    return render(req,'index.html')
+   
+    allproducts = []
+    catofproducts = Product.objects.values('category','id')
+    cats = {item['category'] for item in catofproducts}
+    for cat in cats:
+        prod = Product.objects.filter(category = cat)
+        n = len(prod)
+        noofslides = n//4 + ceil((n/4) - (n//4))
+        allproducts.append([prod,noofslides])
+
+    params = {
+        "allproducts": allproducts
+    }
+    return render(req,'index.html',params)
 
 
 def about(req):
@@ -13,8 +28,12 @@ def contact(req):
     return render(req,'contact.html')
 
 
-def productview(req):
-    return render(req,'product.html')
+def productview(req,pid):
+
+    product = Product.objects.filter(id = pid)
+    print(product)
+
+    return render(req,'productview.html',{'product':product[0]})
 
 
 def search(req):
