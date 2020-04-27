@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from . models import Product
+from . models import Product,Contact
 from math import ceil
 
 def shop(req):
@@ -25,6 +25,14 @@ def about(req):
 
 
 def contact(req):
+    if req.method == "POST":
+        print(req)
+        name = req.POST.get('name','')
+        email = req.POST.get('email','')
+        phone = req.POST.get('phone','')
+        query = req.POST.get('query','')
+        contact = Contact(name=name,email=email,phone=phone,query=query)
+        contact.save()
     return render(req,'contact.html')
 
 

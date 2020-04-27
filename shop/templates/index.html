@@ -3,17 +3,17 @@
 {% block title %} Home {% endblock %}
 {% block script %} 
 <script>
-
+  console.log("hi")
     if(localStorage.getItem('cart') == null){
       var cart = {};
       // console.log(cart);
     }else{
-      
       cart = JSON.parse(localStorage.getItem('cart'));
+      document.getElementById('cart').innerHTML = Object.keys(cart).length; 
       // console.log(cart);
     }
 
-    $('.cartbtn').click(function(){
+    $('.cart').click(function(){
       // console.log("clicked");
       var id = this.id.toString();
       // console.log(id);
@@ -60,11 +60,11 @@
     
             {% for i in product %}
             <div class="col-sm-3">
-              <a href="/product/{{i.id}}">
+              
                 <div class="card border-0" >
                   <img src='/media/{{i.image}}' class="card-img-top" id="img-card" alt="...">
                   <div class="card-body">
-                    <h6 class="card-title">{{i.product_name}}</h6>
+                    <h6 class="card-title"><a href="/product/{{i.id}}">{{i.product_name}}</a></h6>
                     <p class="card-text">{{i.desc}}</p>
                     <div class="row justify-content-between">
                       <button class="btn btn-primary btn-sm cart" id="product{{i.id}}" >Add to Cart</button>
@@ -72,7 +72,6 @@
                     </div>
                   </div>
                 </div>
-              </a>
             </div>
             {% if forloop.counter|divisibleby:4 and forloop.counter > 0 and not forloop.last %}
           </div>
