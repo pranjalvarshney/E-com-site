@@ -25,5 +25,15 @@ class Product(models.Model):
     def __str__(self):
         return self.product_name
 
+class Banner(models.Model):
+    banner_id = models.AutoField(primary_key = True)
+    title = models.CharField(max_length=50,default='')
+    description = models.CharField(max_length=200,default='')
+    bgimage = models.ImageField(upload_to="shop/images/banner/bg",default='')
+    image = models.ImageField(upload_to="shop/images/banner/img",default='')
+
+    def __str__(self):
+        return self.title
+
 
 

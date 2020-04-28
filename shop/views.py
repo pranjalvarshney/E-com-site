@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from . models import Product,Contact
+from . models import Product,Contact,Banner
 from math import ceil
 
 def shop(req):
@@ -14,8 +14,12 @@ def shop(req):
         noofslides = n//4 + ceil((n/4) - (n//4))
         allproducts.append([prod,noofslides])
 
+    banners = Banner.objects.all()
+    noofbanner = len(banners)
+
     params = {
-        "allproducts": allproducts
+        "allproducts": allproducts,
+        "banners": banners
     }
     return render(req,'index.html',params)
 
