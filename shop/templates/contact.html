@@ -6,8 +6,9 @@
 
     <div class="container my-5">
 
-        <h3 >Contact Us</h3>
-         <p></p>
+        <h3 class="mx-5">Contact Us</h3>
+         <p>We’d love to hear from you.
+          Thank you for visiting Easy Cart. If you would like more information about our company or our services or for any other query.Chat with us. Or, submit the form below and we’ll contact you.</p>
         <form class="mt-3  mx-auto w-50" action="/contact/" method="POST">  {% csrf_token %}
             <div class="form-group">
                 <label for="name">Name</label>
@@ -27,7 +28,7 @@
                 <label for="query">Enter your query</label>
                 <textarea class="form-control" id="query" name="query" rows="3"></textarea>
               </div>
-            <button class="w-25 btn btn-outline-primary ">Submit</button>
+            <button class="w-100 btn btn-outline-primary ">Submit</button>
         </form>
     </div>
 
