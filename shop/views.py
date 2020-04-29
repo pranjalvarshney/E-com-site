@@ -15,7 +15,6 @@ def shop(req):
         allproducts.append([prod,noofslides])
 
     banners = Banner.objects.all()
-    noofbanner = len(banners)
 
     params = {
         "allproducts": allproducts,
