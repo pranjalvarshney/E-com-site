@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.http import HttpResponse
-from . models import Product,Contact,Banner
+from . models import Product,Contact,Banner,Order
 from math import ceil
 
 def shop(req):
@@ -56,4 +56,26 @@ def tracker(req):
 
 
 def checkout(req):
+    if req.method == "POST":
+        item_json = req.POST.get('item_json','')
+        name = req.POST.get('name','')
+        phone = req.POST.get('phone','')
+        address = req.POST.get('address','')
+        city = req.POST.get('city','')
+        state = req.POST.get('state','')
+        pincode = req.POST.get('pincode','')
+
+        order = Order(item_json=item_json,name=name,phone=phone,address=address,state=state,city=city,pincode=pincode)  
+        order.save()  
+        print(name+phone+address)
+        status = True ## success
+        order_id = order.order_id
+        params = {
+            'order_id': order_id,
+            'status': status
+        }
+        return render(req,'checkout.html',params)
+
+
     return render(req,'checkout.html')
+

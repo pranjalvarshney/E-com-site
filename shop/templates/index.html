@@ -19,11 +19,15 @@
       // console.log("clicked");
       
       var id = this.id.toString();
-      // console.log(id);
+      console.log(id);
       if(cart[id] != undefined){
-        cart[id] = cart[id] + 1;
+        qty = cart[id][0] + 1;;
+       
       }else{
-        cart[id] = 1;
+        qty = 1;
+        pprice = document.getElementById('prprice'+ id).innerHTML;
+        pname = document.getElementById('prname'+id).innerHTML;
+        cart[id] = [qty,pname,pprice];
       }
       localStorage.setItem('cart',JSON.stringify(cart));
       console.log(Object.keys(cart).length);
@@ -38,23 +42,33 @@
         console.log(item)
 
       document.getElementById('cart').innerHTML = Object.keys(cart).length; 
-        document.getElementById("span"+item).innerHTML = "<button id='minus" + item + "' class='btn btn-sm btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item] + "</span> <button id='plus" + item + "' class='btn btn-sm btn-primary plus'> + </button>";    
+        document.getElementById("span"+item).innerHTML = "<button id='minus" + item + "' class='btn btn-sm btn-primary minus'>-</button> <span id='val" + item + "''>" + cart[item][0] + "</span> <button id='plus" + item + "' class='btn btn-sm btn-primary plus'> + </button>";    
       }
       
     }
+
+    function clearCart(cart){
+      cart = JSON.parse(localStorage.getItem('cart'));
+      for(var item in cart){
+        document.getElementById('span'+item).innerHTML = '<button class="btn btn-primary btn-sm cart" id="product{{i.id}}" >Add to Cart</button>';
+        localStorage.clear();
+        updateCart(cart);
+      }
+    }
+
     $('.divpr').on("click", "button.minus", function() {
           a = this.id.slice(12, );
           console.log(a);
-          cart['product' + a] = cart['product' + a] - 1;
-          cart['product' + a] = Math.max(0, cart['product' + a]);
-          document.getElementById('valproduct' + a).innerHTML = cart['product' + a];
+          cart['product' + a][0] = cart['product' + a][0] - 1;
+          cart['product' + a][0] = Math.max(0, cart['product' + a][0]);
+          document.getElementById('valproduct' + a).innerHTML = cart['product' + a][0];
           updateCart(cart);
       });
       $('.divpr').on("click", "button.plus", function() {
           a = this.id.slice(11, );
           console.log(a)
-          cart['product' + a] = cart['product' + a] + 1;
-          document.getElementById('valproduct' + a).innerHTML = cart['product' + a];
+          cart['product' + a][0] = cart['product' + a][0] + 1;
+          document.getElementById('valproduct' + a).innerHTML = cart['product' + a][0];
           updateCart(cart);
       });
 </script>
@@ -128,13 +142,13 @@
                 <div class="card " >
                   <img src='/media/{{i.image}}' class="card-img-top" id="img-card" alt="...">
                   <div class="card-body">
-                    <h6 class="card-title my-0"><a href="/product/{{i.id}}">{{i.product_name|slice:"0:26"}}</a></h6>
+                    <a href="/product/{{i.id}}"><h6 class="card-title my-0" id="prnameproduct{{i.id}}">{{i.product_name|slice:"0:26"}}</h6>  </a>
                     <p class="card-text">{{i.desc}}</p>
                     <div class="row justify-content-between m-auto">
                       <span id="spanproduct{{i.id}}" class="divpr">
                         <button class="btn btn-primary btn-sm cart" id="product{{i.id}}" >Add to Cart</button>
                       </span>
-                      <h6 >{{i.price}}</h6>
+                      <h6 id="prpriceproduct{{i.id}}">{{i.price}}</h6>
                     </div>
                   </div>
                 </div>
@@ -147,8 +161,6 @@
             {% endfor %}
         
         </div>
-    
-        </div>
         <a class="carousel-control-prev" href="#carouselExampleControls{{forloop.counter}}" role="button" data-slide="prev">
           <span class="carousel-control-prev-icon" aria-hidden="true"></span>
           <span class="sr-only">Previous</span>
@@ -157,7 +169,10 @@
           <span class="carousel-control-next-icon" aria-hidden="true"></span>
           <span class="sr-only">Next</span>
         </a>
+        </div>
+        
       </div>
+      
       
       {% endfor %}
 {% endblock %}
