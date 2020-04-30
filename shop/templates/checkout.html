@@ -33,7 +33,12 @@
             $('#productlist').append(pdata);
             
             $('#itemlist_json').val(JSON.stringify(cart));
+            {% if status %}
             
+            alert('Hello your order is successfully placed..... {{order_id}}');
+            localStorage.clear();
+            document.location('/');
+            {% endif%}
             
         }  
 
