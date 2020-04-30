@@ -39,9 +39,17 @@ class Order(models.Model):
     order_id = models.AutoField(primary_key=True)
     item_json = models.CharField(max_length=5000)
     name = models.CharField(max_length=50)
-    phone = models.IntegerField()
+    phone = models.CharField(max_length=10)
     address = models.CharField(max_length=500)
     city = models.CharField(max_length=50)
     state = models.CharField(max_length=50)
-    pincode = models.IntegerField()
+    pincode = models.CharField(max_length=10)
 
+class OrderUpdate(models.Model):
+    update_id = models.AutoField(primary_key=True)
+    order_id = models.CharField(max_length=50)
+    update_desc = models.CharField(max_length=50)
+    timestamp = models.DateField(auto_now_add=True)
+
+    def __str__(self): 
+        return self.order_id + " Status:  " + self.update_desc

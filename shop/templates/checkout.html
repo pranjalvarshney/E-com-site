@@ -37,7 +37,7 @@
             
             alert('Hello your order is successfully placed..... {{order_id}}');
             localStorage.clear();
-            document.location('/');
+            document.location= 'localhost:8000';
             {% endif%}
             
         }  
@@ -54,7 +54,7 @@
     <div class="container">
         <div class="row my-4">
             <di class="col">
-             <h3 class="my-3">Step 1 - Review yout cart:</h3>
+             <h3 class="my-3">Step 1 - Review your cart:</h3>
              <ul class="list-group w-75" id="productlist">
                  <!-- <li class="list-group-item d-flex justify-content-between align-items-center" id="pname">
                    Cras justo odio
@@ -67,7 +67,7 @@
          <div class="row my-4">
             <di class="col">
              <h3 class="my-3">Step 2 - Enter shipping details:</h3>
-             <form action="/checkout" method="POST">{% csrf_token %}
+             <form action="/checkout/" method="POST">{% csrf_token %}
                 <div class="form-row w-75">
                     <input type="text" hidden id="itemlist_json" name="item_json">
                   <div class="form-group col-md-6">
